@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import axios from 'axios';
 
 export const LOAD_GROUPS = 'LOAD_GROUPS';
-type LOAD_GROUPS = typeof LOAD_GROUPS;
+export type LOAD_GROUPS = typeof LOAD_GROUPS;
 
 export interface LoadGroupsAction {
   type: LOAD_GROUPS;
@@ -15,7 +15,7 @@ export function loadGroups(groups: ReactExamples.Group[]): LoadGroupsAction {
   return {
     type: LOAD_GROUPS,
     groups: groups
-  }
+  };
 }
 
 export function fetchGroups() {

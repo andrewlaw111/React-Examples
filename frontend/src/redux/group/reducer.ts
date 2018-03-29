@@ -6,7 +6,7 @@ interface GroupState {
 
 const initialState = {
   groups: []
-}
+};
 
 export const reducer = (state: GroupState = initialState, action: GroupActions) => {
   switch (action.type) {

@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import axios from 'axios';
 
 export const LOAD_USERS = 'LOAD_USERS';
-type LOAD_USERS = typeof LOAD_USERS;
+export type LOAD_USERS = typeof LOAD_USERS;
 
 export interface LoadUsersAction {
   type: LOAD_USERS;
@@ -15,7 +15,7 @@ export function loadUsers(users: ReactExamples.User[]): LoadUsersAction {
   return {
     type: LOAD_USERS,
     users: users
-  }
+  };
 }
 
 export function fetchGroups() {

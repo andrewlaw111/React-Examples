@@ -1,20 +1,32 @@
 import * as React from 'react';
-import './App.css';
-
-const logo = require('./logo.svg');
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Login } from './screens/Login';
+import { User } from './screens/User';
+import { Group } from './screens/Group';
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
+      <Router>
+        <div className="App">
+          <div style={{textAlign: 'center'}}>
+            <h1>
+              React Examples
+            </h1>
+          </div>
+          <ul className="nav nav-tabs">
+            <li role="presentation">
+              <Link to="/users">Users</Link>
+            </li>
+            <li role="presentation">
+              <Link to="/groups">Groups</Link>
+            </li>
+          </ul>
+          <Route component={Login} />
+          <Route path="/users" component={User} />
+          <Route path="/groups" component={Group} />
+        </div>
+      </Router>
     );
   }
 }

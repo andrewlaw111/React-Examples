@@ -6,7 +6,7 @@ interface UserState {
 
 const initialState = {
   users: []
-}
+};
 
 export const reducer = (state: UserState = initialState, action: UserActions) => {
   switch (action.type) {
