@@ -35,10 +35,37 @@ export function loginUser(username: string, password: string) {
   return (dispatch: Dispatch<LoginActions>) => {
     return axios
       .post<{ token: string; message?: string }>(
-        'http://localhost:3001/api/login',
+        `${process.env.REACT_APP_API_SERVER}/api/login`,
         {
           username: username,
           password: password
+        }
+      )
+      .then(response => {
+        if (response.data == null) {
+          dispatch(loginFailure('Unknown Error'));
+        } else if (!response.data.token) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          dispatch(loginFailure(response.data.message || ''));
+        } else {
+          // If login was successful, set the token in local storage
+          localStorage.setItem('token', response.data.token);
+          // Dispatch the success action
+          dispatch(loginSuccess());
+        }
+      });
+      // .catch(err => console.log('Error: ', err));
+  };
+}
+
+export function loginFacebook(accessToken: string) {
+  return (dispatch: Dispatch<LoginActions>) => {
+    return axios
+      .post<{ token: string; message?: string }>(
+        `${process.env.REACT_APP_API_SERVER}/api/login/facebook`,
+        {
+          access_token: accessToken
         }
       )
       .then(response => {

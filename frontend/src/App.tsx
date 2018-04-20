@@ -1,32 +1,17 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Login } from './screens/Login';
-import { User } from './screens/User';
-import { Group } from './screens/Group';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { RouterOutlet } from './RouterOutlet';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 class App extends React.Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-          <div style={{textAlign: 'center'}}>
-            <h1>
-              React Examples
-            </h1>
-          </div>
-          <ul className="nav nav-tabs">
-            <li role="presentation">
-              <Link to="/users">Users</Link>
-            </li>
-            <li role="presentation">
-              <Link to="/groups">Groups</Link>
-            </li>
-          </ul>
-          <Route component={Login} />
-          <Route path="/users" component={User} />
-          <Route path="/groups" component={Group} />
-        </div>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <RouterOutlet />
+        </Router>
+      </Provider>
     );
   }
 }

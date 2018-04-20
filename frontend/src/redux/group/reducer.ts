@@ -1,6 +1,6 @@
 import { GroupActions, LOAD_GROUPS } from './actions';
 
-interface GroupState {
+export interface GroupState {
   groups: ReactExamples.Group[];
 }
 

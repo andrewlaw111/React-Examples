@@ -1,13 +1,21 @@
 import * as React from 'react';
-import FacebookLogin from 'react-facebook-login';
-import env from '../environment';
+import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
+import { connect } from 'react-redux';
+import { loginFacebook } from '../redux/auth/actions';
 
-export class Login extends React.Component {
+interface LoginProps {
+  loginFacebook: (accessToken: string) => Promise<void>;
+}
+
+class PureLogin extends React.Component<LoginProps, {}> {
   componentClicked() {
     return null;
   }
 
-  responseFacebook() {
+  responseFacebook = (userInfo: ReactFacebookLoginInfo & { accessToken: string }) => {
+    if (userInfo.accessToken) {
+      this.props.loginFacebook(userInfo.accessToken);
+    }
     return null;
   }
 
@@ -32,7 +40,7 @@ export class Login extends React.Component {
           <h4 className="text-center"> OR </h4>
           <div className="text-center">
             <FacebookLogin
-              appId={env.FACEBOOK_APP_ID || ''}
+              appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
               autoLoad={true}
               fields="name,email,picture"
               onClick={this.componentClicked}
@@ -44,3 +52,7 @@ export class Login extends React.Component {
     );
   }
 }
+
+export const Login = connect(() => ({}), (dispatch) => ({
+  loginFacebook: (accessToken: string) => dispatch(loginFacebook(accessToken))
+}))(PureLogin);

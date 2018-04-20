@@ -1,6 +1,6 @@
 import { UserActions, LOAD_USERS } from './actions';
 
-interface UserState {
+export interface UserState {
   users: ReactExamples.User[];
 }
 
