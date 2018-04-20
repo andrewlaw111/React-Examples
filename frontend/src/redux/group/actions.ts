@@ -21,7 +21,11 @@ export function loadGroups(groups: ReactExamples.Group[]): LoadGroupsAction {
 export function fetchGroups() {
   return (dispatch: Dispatch<GroupActions>) => {
     axios
-      .get<ReactExamples.Group[]>(`${process.env.API_SERVER}/api/groups`)
+      .get<ReactExamples.User[]>(`${process.env.REACT_APP_API_SERVER}/api/groups`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
       .then(res => {
         dispatch(loadGroups(res.data));
       });

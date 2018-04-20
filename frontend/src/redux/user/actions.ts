@@ -18,10 +18,14 @@ export function loadUsers(users: ReactExamples.User[]): LoadUsersAction {
   };
 }
 
-export function fetchGroups() {
+export function fetchUsers() {
   return (dispatch: Dispatch<UserActions>) => {
     axios
-      .get<ReactExamples.User[]>(`${process.env.API_SERVER}/api/users`)
+      .get<ReactExamples.User[]>(`${process.env.REACT_APP_API_SERVER}/api/users`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
       .then(res => {
         dispatch(loadUsers(res.data));
       });
