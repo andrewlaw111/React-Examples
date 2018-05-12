@@ -7,12 +7,14 @@ import { Login } from './screens/Login';
 import { Home } from './screens/Home';
 import { User } from './screens/User';
 import { Group } from './screens/Group';
+import { logOut } from './redux/auth/actions';
 
 interface RouterOutletProps extends RouteComponentProps<{}> {
   isAuthenticated: boolean;
+  logOutAction: () => void;
 }
 
-const PureRouterOutlet = ({ isAuthenticated }: RouterOutletProps) => {
+const PureRouterOutlet = ({ isAuthenticated, logOutAction }: RouterOutletProps) => {
   return (
     <div className="App">
       <div style={{ textAlign: 'center' }}>
@@ -32,7 +34,7 @@ const PureRouterOutlet = ({ isAuthenticated }: RouterOutletProps) => {
         </li>
         {isAuthenticated ? (
           <li className="nav-item">
-            <a href="/" className="nav-link">Logout</a>
+            <a href="#" onClick={logOutAction} className="nav-link">Logout</a>
           </li>
         ) : null}
       </ul>
@@ -54,7 +56,11 @@ const PureRouterOutlet = ({ isAuthenticated }: RouterOutletProps) => {
 };
 
 export const RouterOutlet = withRouter(
-  connect<Partial<RouterOutletProps>, {}, RouteComponentProps<{}>>((state: RootState) => ({
-    isAuthenticated: state.auth.isAuthenticated
-  })
+  connect<Partial<RouterOutletProps>, {}, RouteComponentProps<{}>>(
+    (state: RootState) => ({
+      isAuthenticated: state.auth.isAuthenticated
+    }),
+    (dispatch) => ({
+      logOutAction: () => dispatch(logOut())
+    })
 )(PureRouterOutlet));

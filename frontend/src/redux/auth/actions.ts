@@ -16,7 +16,14 @@ export interface LoginFailureAction {
   message: string;
 }
 
-export type LoginActions = LoginSuccessAction | LoginFailureAction;
+export const LOGOUT = 'LOGOUT';
+export type LOGOUT = typeof LOGOUT;
+
+export interface LogOutAction {
+  type: LOGOUT;
+}
+
+export type LoginActions = LoginSuccessAction | LoginFailureAction | LogOutAction;
 
 function loginSuccess() {
   return {
@@ -28,6 +35,12 @@ function loginFailure(message: string) {
   return {
     type: LOGIN_FAILURE,
     message: message
+  };
+}
+
+function logOutAction() {
+  return {
+    type: LOGOUT
   };
 }
 
@@ -83,5 +96,23 @@ export function loginFacebook(accessToken: string) {
         }
       });
       // .catch(err => console.log('Error: ', err));
+  };
+}
+
+declare global {
+  interface Window {
+    FB: {
+      logout: (callback: () => void) => void;
+    };
+  }
+}
+
+export function logOut() {
+  return (dispatch: Dispatch<LoginActions>) => {
+    window.FB.logout(() => {
+      localStorage.removeItem('token');
+      // Dispatch the success action
+      dispatch(logOutAction());
+    });
   };
 }

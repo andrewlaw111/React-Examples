@@ -1,4 +1,4 @@
-import { LoginActions, LOGIN_SUCCESS } from './actions';
+import { LoginActions, LOGIN_SUCCESS, LOGOUT } from './actions';
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -14,6 +14,11 @@ export function authReducer(state: AuthState = initialState, action: LoginAction
       return {
         ...state,
         isAuthenticated: true
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false
       };
     default:
       return state;
